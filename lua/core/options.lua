@@ -1,7 +1,7 @@
 local g   = vim.g
 local o   = vim.o
 local opt = vim.opt
-
+local exec	= vim.api.nvim_exec
 
 -- Line Numeration
 o.number	= true
@@ -42,3 +42,13 @@ o.backupdir   = '/tmp'
 o.directory   = '/tmp'
 o.undodir     = '/tmp'
 
+-- Spelling
+
+-- spell
+exec([[
+    augroup latexSpell
+        autocmd!
+        autocmd FileType tex setlocal spell spelllang=es_mx
+        autocmd BufRead,BufNewFile *.tex setlocal spell spelllang=es_mx
+    augroup END
+]], false)
