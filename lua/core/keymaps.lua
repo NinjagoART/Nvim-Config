@@ -8,7 +8,7 @@ end
 
 
 -- Leader key --
-map('n', '<Space>', '', {})
+map('n', '<Space>', '', '')
 vim.g.mapleader = ' '
 
 
