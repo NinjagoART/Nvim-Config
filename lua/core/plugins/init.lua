@@ -218,24 +218,24 @@ require("lazy").setup({
 		build = 'go build'
 		-- build = 'go build -o ~/.bin/' if e.g. ~/.bin/ is in $PATH
 	},
-	{
-		"zbirenbaum/copilot.lua",
-		event = { "InsertEnter" },
-		cmd = { "Copilot" },
-		opts = {
-			suggestion = {
-				auto_trigger = true,
-				keymap = {
-					accept = "<C-CR>",
-					accept_word = false,
-					accept_line = false,
-					next = "<M-]>",
-					prev = "<M-[>",
-					dismiss = "<C-]>",
-				},
-			},
-		}
-	},
+	-- {
+	-- 	"zbirenbaum/copilot.lua",
+	-- 	event = { "InsertEnter" },
+	-- 	cmd = { "Copilot" },
+	-- 	opts = {
+	-- 		suggestion = {
+	-- 			auto_trigger = true,
+	-- 			keymap = {
+	-- 				accept = "<C-CR>",
+	-- 				accept_word = false,
+	-- 				accept_line = false,
+	-- 				next = "<M-]>",
+	-- 				prev = "<M-[>",
+	-- 				dismiss = "<C-]>",
+	-- 			},
+	-- 		},
+	-- 	}
+	-- },
 	{
 		"zbirenbaum/copilot-cmp",
 		config = function()
