@@ -90,28 +90,34 @@ require("lazy").setup({
 		{
 			"williamboman/mason-lspconfig.nvim",
 			lazy = false,
+			config = function() 
+				require("mason-lspconfig").setup()
+			end,
 		},
 
 		{
 			"neovim/nvim-lspconfig",
 		},
-		{
-			"stevearc/conform.nvim",
-			optional = true,
-			opts = {
-				formatters_by_ft = {
-					cs = { "csharpier" },
-				},
-				formatters = {
-					csharpier = {
-						command = "dotnet-csharpier",
-						args = { "--write-stdout" },
-					},
-				},
-			},
-		},
+		-- {
+		-- 	"stevearc/conform.nvim",
+		-- 	optional = true,
+		-- 	opts = {
+		-- 		formatters_by_ft = {
+		-- 			cs = { "csharpier" },
+		-- 		},
+		-- 		formatters = {
+		-- 			csharpier = {
+		-- 				command = "dotnet-csharpier",
+		-- 				args = { "--write-stdout" },
+		-- 			},
+		-- 		},
+		-- 	},
+		-- },
 		{
 			"nvimtools/none-ls.nvim",
+			dependencies = {
+				"nvimtools/none-ls-extras.nvim",
+			},
 		},
 	},
 	{

@@ -1,19 +1,14 @@
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/usr/bin/omnisharp"
 local executable = 'zathura'
-local args = {
-	'--synctex-editor-command',
-	[[nvim-texlabconfig -file '%%%{input}' -line %%%{line} -server ]] .. vim.v.servername,
-	'--synctex-forward',
-	'%l:1:%f',
-	'%p',
-}
+
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local lspconfig = require("lspconfig")
 
 require("mason-lspconfig").setup({
 	ensure_installed = {
 		"lua_ls",
 		"clangd",
-		-- "csharp_ls",
 		"omnisharp",
 		"pyright",
 		"bashls",
@@ -21,14 +16,14 @@ require("mason-lspconfig").setup({
 	automatic_installation = true,
 })
 
-require("mason-lspconfig").setup()
-
 require("mason-lspconfig").setup_handlers {
 	-- The first entry (without a key) will be the default handler
 	-- and will be called for each installed server that doesn't have
 	-- a dedicated handler.
 	function(server_name) -- default handler (optional)
-		require("lspconfig")[server_name].setup {}
+		lspconfig[server_name].setup {
+			capabilities = capabilities
+		}
 	end,
 	-- Next, you can provide a dedicated handler for specific servers.
 	-- For example, a handler override for the `rust_analyzer`:
@@ -38,7 +33,7 @@ require("mason-lspconfig").setup_handlers {
 }
 
 
-require("lspconfig").lua_ls.setup({
+lspconfig.lua_ls.setup({
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -53,26 +48,32 @@ require("lspconfig").lua_ls.setup({
 		},
 	},
 })
+--
+--
+-- lspconfig.ltex.setup {
+-- 	settings = {
+-- 		ltex = {
+-- 			language = "es",
+-- 		},
+-- 	},
+-- }
+--
+--
+-- lspconfig.omnisharp.setup {
+-- 	cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
+-- 	handlers = {
+-- 		["textDocument/definition"] = require("omnisharp_extended").handler,
+-- 		["textDocument/declaration"] = require("omnisharp_extended").handler,
+-- 		["textDocument/typeDefinition"] = require("omnisharp_extended").handler,
+-- 	},
+--
+-- }
+--
 
-
-require("lspconfig").ltex.setup {
-	settings = {
-		ltex = {
-			language = "es",
-		},
-	},
-}
-
-
-require 'lspconfig'.omnisharp.setup {
-	cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
-	handlers = {
-		["textDocument/definition"] = require("omnisharp_extended").handler,
-		["textDocument/declaration"] = require("omnisharp_extended").handler,
-		["textDocument/typeDefinition"] = require("omnisharp_extended").handler,
-	},
-
-}
+-- Show Errors/Warmings over the line
+vim.diagnostic.config({
+	virtual_text = true,
+})
 
 
 vim.api.nvim_create_autocmd("LspAttach", {
